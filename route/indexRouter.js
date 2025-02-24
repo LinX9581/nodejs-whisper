@@ -11,41 +11,16 @@ const allowedExtensions = [
     '.mp4', '.mov', '.avi', '.mkv' // 影片
 ];
 
-// 簡單生成 SRT 格式（假設每行 5 秒）
-function generateSRT(transcript) {
-    const lines = transcript.split('\n');
-    let srtContent = '';
-    lines.forEach((line, index) => {
-        if (line.trim()) {
-            const startTime = new Date(index * 5000).toISOString().substr(11, 12).replace('.', ',');
-            const endTime = new Date((index + 1) * 5000).toISOString().substr(11, 12).replace('.', ',');
-            srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${line.trim()}\n\n`;
-        }
+router.get('/', (req, res) => {
+    res.render('index', {
+        title: 'Nodejs-Template',
+        transcript: null,
+        fileUrl: null,
+        downloadLinks: null,
+        fileSize: null,
+        duration: null
     });
-    return srtContent;
-}
-
-// 簡單生成 FCPXML 格式（僅示範，實際應用需更多細節）
-function generateFCPXML(transcript) {
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE fcpxml>
-<fcpxml version="1.9">
-    <resources>
-        <asset id="r1" name="transcribed_audio" />
-    </resources>
-    <library>
-        <event name="Transcription">
-            <project name="Transcript">
-                <sequence>
-                    <spine>
-                        <title lane="0" offset="0s" duration="10s" format="r1">${transcript}</title>
-                    </spine>
-                </sequence>
-            </project>
-        </event>
-    </library>
-</fcpxml>`;
-}
+});
 
 router.post('/upload', (req, res) => {
     if (!req.files || !req.files.video) {
@@ -112,15 +87,41 @@ router.post('/upload', (req, res) => {
     });
 });
 
-router.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Nodejs-Template',
-        transcript: null,
-        fileUrl: null,
-        downloadLinks: null,
-        fileSize: null,
-        duration: null
+// 簡單生成 SRT 格式（假設每行 5 秒）
+function generateSRT(transcript) {
+    const lines = transcript.split('\n');
+    let srtContent = '';
+    lines.forEach((line, index) => {
+        if (line.trim()) {
+            const startTime = new Date(index * 5000).toISOString().substr(11, 12).replace('.', ',');
+            const endTime = new Date((index + 1) * 5000).toISOString().substr(11, 12).replace('.', ',');
+            srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${line.trim()}\n\n`;
+        }
     });
-});
+    return srtContent;
+}
+
+// 簡單生成 FCPXML 格式（僅示範，實際應用需更多細節）
+function generateFCPXML(transcript) {
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.9">
+    <resources>
+        <asset id="r1" name="transcribed_audio" />
+    </resources>
+    <library>
+        <event name="Transcription">
+            <project name="Transcript">
+                <sequence>
+                    <spine>
+                        <title lane="0" offset="0s" duration="10s" format="r1">${transcript}</title>
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+    </library>
+</fcpxml>`;
+}
+
 
 export default router;
