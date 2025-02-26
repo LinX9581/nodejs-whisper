@@ -169,19 +169,19 @@ async function writeFiles(filePath, baseName, transcript) {
 // 輔助函數：下載 YouTube
 async function downloadYouTube(url, outputPath) {
     // 從環境變數載入 cookies，預設為空陣列
-    const cookies = process.env.YOUTUBE_COOKIES ? JSON.parse(process.env.YOUTUBE_COOKIES) : [];
-    if (cookies.length === 0) {
-        console.warn('No cookies provided, YouTube download may fail.');
-    }
+    // const cookies = process.env.YOUTUBE_COOKIES ? JSON.parse(process.env.YOUTUBE_COOKIES) : [];
+    // if (cookies.length === 0) {
+    //     console.warn('No cookies provided, YouTube download may fail.');
+    // }
 
     // 創建帶有 cookies 的 agent
-    const agent = ytdl.createAgent(cookies);
+    // const agent = ytdl.createAgent(cookies);
 
     // 使用 agent 下載 YouTube 影片
     const stream = ytdl(url, {
         filter: 'audioonly',
         quality: 'highestaudio',
-        agent,
+        // agent,
       });
 
     const fileStream = fs.createWriteStream(outputPath);
