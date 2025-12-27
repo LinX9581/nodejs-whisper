@@ -4,12 +4,12 @@ import fs from 'fs';
 import path from 'path';
 import FormData from 'form-data';
 import ytdl from '@distube/ytdl-core';
-import query from '../mysql-connect';
-import 'dotenv/config';
+import query from '../mysql-connect.js';
+import config from '../config.js';
 
 const router = express.Router();
 const allowedExtensions = ['.mp3', '.wav', '.m4a', '.mp4', '.mov', '.avi', '.mkv'];
-const YOUTUBE_COOKIES = process.env.YOUTUBE_COOKIES || '';
+const YOUTUBE_COOKIES = config.youtube_cookies || '';
 
 // 生成檔案名稱
 const generateFileName = (base, ext = '') => `nn_${base}_${Math.floor(Math.random() * 1000000)}${ext}`;

@@ -16,15 +16,11 @@ docker run -d --gpus all -p 9000:9000 -e ASR_MODEL=base onerahmet/openai-whisper
   
 ```
 git clone https://github.com/LinX9581/nodejs-whisper
-cd nodejs-whisper && yarn install
+cd nodejs-whisper && npm install
 mkdir public/download -p
-cat>.env<<EOF
-db_host=172.16.200.6
-db_user=docker
-db_password=00000000
-port=3005
-YOUTUBE_COOKIES=
-yarn start
+cp config-sample.js config.js
+mysql -u dev -p < schema.sql
+npm start
 ```
   
 ## Youtube 有時會擋IP  

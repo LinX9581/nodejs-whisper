@@ -4,6 +4,5 @@ export default {
     user: 'dev',
     password: '00000000',
   },
-  youtube_cookies: '',
   port: 3000,
 };

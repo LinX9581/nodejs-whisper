@@ -1,7 +1,7 @@
 import schedule from "node-schedule";
 import { exec } from "child_process";
 import { promisify } from "util";
-import query from "../mysql-connect";
+import query from "../mysql-connect.js";
 import moment from "moment";
 
 const execProm = promisify(exec);
